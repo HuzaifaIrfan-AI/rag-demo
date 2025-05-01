@@ -1,0 +1,25 @@
+[project]
+name = "rag-demo"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "chromadb>=1.0.7",
+    "fastembed>=0.6.1",
+    "langchain>=0.3.24",
+    "langchain-community>=0.3.23",
+    "langchain-core>=0.3.56",
+    "langchain-ollama>=0.3.2",
+    "langchain-text-splitters>=0.3.8",
+    "ollama>=0.4.8",
+    "pdfplumber>=0.11.6",
+    "streamlit>=1.45.0",
+    "unstructured>=0.17.2",
+]
+
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.29.5",
+]
