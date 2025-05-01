@@ -10,11 +10,11 @@ Search Domain
 Search
 Popular Domain Extensions
 TLD	Price
-.com	$12.62 USD
-.net	$13.02 USD
-.org	$8.99 USD
-.me	$12.95 USD
-.co	$35.00 USD
+.com	$12.62 USD per Year
+.net	$13.02 USD per Year
+.org	$8.99 USD per Year
+.me	$12.95 USD per Year
+.co	$35.00 USD per Year
 
 
 
