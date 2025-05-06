@@ -2,8 +2,6 @@
 
 from langchain_ollama import OllamaLLM
 import requests
-from langchain.vectorstores import Chroma
-from langchain.embeddings.base import Embeddings
 from langchain.schema import Document
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
