@@ -72,10 +72,13 @@ def generate_and_store_vector_embeddings():
     
 
 
-def retrieve(state):
+from graph import State
+def retrieve(state: State):
     print("---RETRIEVE---")
-    question = state["question"]
+    
+    last_message = state["messages"][-1]
 
     # Retrieval
-    documents = retriever.invoke(question)
-    return {"documents": documents, "question": question}
+    documents = retriever.invoke(last_message.content)
+    # state["documents"].extend(documents)
+    return {"documents": documents}

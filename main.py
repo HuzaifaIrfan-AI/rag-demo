@@ -1,22 +1,29 @@
 
 
-from graph import graph
+from graph import graph, State
 
-def rag_ask(query):
-    
-    state = {"question": query, "documents": []}
-    
-    state = graph.invoke(state)
-    
-    print(state)
+def main():    
+    state = State(messages=[],documents=[])
 
-    return state.get("generation")
+    while(1):
+        query = input("Ask a question: ")
+        
+        state["messages"] = state.get("messages", []) + [
+        {"role": "user", "content": query}
+        ]
     
+        state = graph.invoke(state)
+
+        if state.get("messages") and len(state["messages"]) > 0:
+            last_message = state["messages"][-1]
+            print(f"Assistant: {last_message.content}")
+            
+
+
+
 
 # 🔍 Example usage
 if __name__ == "__main__":
-    while(1):
-        query = input("Ask a question: ")
-        response = rag_ask(query)
-        print("\n💬 Answer:")
-        print(response)
+    main()
+
+        

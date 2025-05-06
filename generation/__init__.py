@@ -23,18 +23,18 @@ llm = OllamaLLM(
     temperature=0.1
 )
 
-
-def generate(state):    
+from graph import State
+def generate(state: State):    
     print("---GENERATE---")
-    question = state["question"]
-    documents = state["documents"]
     
+    last_message = state["messages"][-1]
+    documents = state["documents"]
     message=f"""
 Context:
-{question}
+{documents}
 
 Question:
-{question}
+{last_message.content}
     """
     
     messages = [
@@ -44,13 +44,15 @@ Give short reply.
 If unsure, reply "handover" to transfer the conversation to human support.
 If the customer want to talk to human reply "handover"
 Answer the question using only the context below."""
-         },
-        {
+         }
+    ]
+    
+    # messages.extend(state["messages"])
+    messages.extend([{
             "role": "user",
             "content": message
-        }
-    ]
+        }])
     
     generation = llm.invoke(messages)
     
-    return {"documents": documents, "question": question, "generation": generation}
+    return {"messages": [{"role": "assistant", "content": generation}]}

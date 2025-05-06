@@ -13,19 +13,9 @@ from langchain.chat_models import init_chat_model
 from pydantic import BaseModel, Field
 from typing_extensions import TypedDict
 
-from typing_extensions import TypedDict
-from typing import List
-
-### State
-
-class GraphState(TypedDict):
-    question : str
-    generation : str
-    documents : List[str]
+from .State import State
     
-    
-from langgraph.graph import END, StateGraph
-graph_builder = StateGraph(GraphState)
+graph_builder = StateGraph(State)
 
 # Define the nodes
 graph_builder.add_node("retrieve", retrieve) # retrieve
