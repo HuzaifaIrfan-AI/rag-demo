@@ -5,6 +5,9 @@ import requests
 from langchain.vectorstores import Chroma
 from langchain.embeddings.base import Embeddings
 from langchain.schema import Document
+from langchain.prompts import PromptTemplate
+from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.output_parsers import StrOutputParser
 
 # Constants
 OLLAMA_BASE_URL = "http://192.168.18.215:11434/"
@@ -20,33 +23,34 @@ llm = OllamaLLM(
     temperature=0.1
 )
 
-# Ollama LLM call
-def call_ollama_llm(prompt: str, model: str = LLM_MODEL, base_url: str = OLLAMA_BASE_URL) -> str:
-    response= llm.invoke(prompt)
-    return response
 
-
-
-# RAG function
-def generate(question: str, docs: list) -> str:
-
-
-    # Step 2: Construct prompt for LLM
-    context = "\n\n".join([doc.page_content for doc in docs])
-    prompt = f"""You are customer chatbot assistant on Middlehost web hosting platform.
-Give short reply
-If unsure, reply "handover" to transfer the conversation to human support.
-If the customer want to talk to human reply "handover"
-Answer the question using only the context below.
-
+def generate(state):    
+    print("---GENERATE---")
+    question = state["question"]
+    documents = state["documents"]
+    
+    message=f"""
 Context:
-{context}
+{question}
 
 Question:
 {question}
-
-Answer:"""
-
-    # Step 3: Get response from LLM
-    answer = call_ollama_llm(prompt)
-    return answer
+    """
+    
+    messages = [
+        {"role": "system",
+         "content": """You are customer chatbot assistant on Middlehost web hosting platform.
+Give short reply.
+If unsure, reply "handover" to transfer the conversation to human support.
+If the customer want to talk to human reply "handover"
+Answer the question using only the context below."""
+         },
+        {
+            "role": "user",
+            "content": message
+        }
+    ]
+    
+    generation = llm.invoke(messages)
+    
+    return {"documents": documents, "question": question, "generation": generation}

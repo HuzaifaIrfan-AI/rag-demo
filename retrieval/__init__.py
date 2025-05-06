@@ -43,7 +43,7 @@ class OllamaEmbeddings(Embeddings):
 embedding_function = OllamaEmbeddings(model=EMBEDDING_MODEL, base_url=OLLAMA_BASE_URL)
 vectordb = Chroma(persist_directory=PERSIST_DIRECTORY, embedding_function=embedding_function)
 
-
+retriever = vectordb.as_retriever(search_kwargs={"k":TOP_K})
 
 
 def generate_and_store_vector_embeddings():
@@ -70,8 +70,12 @@ def generate_and_store_vector_embeddings():
     print(f"✅ Chroma vector store created and saved to '{PERSIST_DIRECTORY}'")
     
     
-def retrieve(question):
-        # Step 1: Retrieve relevant documents
-    docs = vectordb.similarity_search(question, k=TOP_K)
-    
-    return docs
+
+
+def retrieve(state):
+    print("---RETRIEVE---")
+    question = state["question"]
+
+    # Retrieval
+    documents = retriever.invoke(question)
+    return {"documents": documents, "question": question}

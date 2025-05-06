@@ -1,14 +1,16 @@
 
 
-from retrieval import retrieve
-
-from generation import generate
-
+from graph import graph
 
 def rag_ask(query):
-    docs=retrieve(query)
-    res=generate(query, docs)
-    return res
+    
+    state = {"question": query, "documents": []}
+    
+    state = graph.invoke(state)
+    
+    print(state)
+
+    return state.get("generation")
     
 
 # 🔍 Example usage
