@@ -21,7 +21,7 @@ llm = OllamaLLM(
     temperature=0.1
 )
 
-from graph import State
+from State import State
 def generate(state: State):    
     print("---GENERATE---")
     

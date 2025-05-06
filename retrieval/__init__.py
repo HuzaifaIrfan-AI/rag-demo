@@ -72,7 +72,7 @@ def generate_and_store_vector_embeddings():
     
 
 
-from graph import State
+from State import State
 def retrieve(state: State):
     print("---RETRIEVE---")
     

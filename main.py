@@ -1,6 +1,6 @@
 
 
-from graph import graph, State
+from bot import bot, State
 
 def main():    
     state = State(messages=[],documents=[])
@@ -12,7 +12,7 @@ def main():
         {"role": "user", "content": query}
         ]
     
-        state = graph.invoke(state)
+        state = bot.invoke(state)
 
         if state.get("messages") and len(state["messages"]) > 0:
             last_message = state["messages"][-1]
